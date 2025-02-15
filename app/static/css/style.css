@@ -1,0 +1,165 @@
+/* style.css */
+
+/* General */
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color: #3498db;
+}
+
+a:hover {
+    color: #2980b9;
+}
+
+/* Header */
+#fh5co-header {
+    background: #fff;
+    padding: 20px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-inner h1 a {
+    font-size: 2em;
+    color: #333;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    font-size: 1em;
+    color: #333;
+    font-weight: bold;
+}
+
+nav ul li a:hover {
+    color: #3498db;
+}
+
+nav ul li.call a {
+    font-size: 1em;
+}
+
+nav ul li.cta a {
+    background: #3498db;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+/* Hero Section */
+.flexslider {
+    margin: 0;
+    padding: 0;
+}
+
+.flexslider .slides li {
+    position: relative;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+}
+
+.flexslider .slides li .container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fh5co-property-brief {
+    color: #fff;
+}
+
+.fh5co-box {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.fh5co-box h2 {
+    margin-bottom: 15px;
+    font-size: 2em;
+}
+
+.fh5co-box p {
+    margin-bottom: 15px;
+    font-size: 1.2em;
+}
+
+.fh5co-box .btn-primary {
+    background: #3498db;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.fh5co-box .btn-primary:hover {
+    background: #2980b9;
+}
+
+/* Sections */
+section {
+    padding: 60px 0;
+}
+
+section#features {
+    background: #f9f9f9;
+}
+
+section#about {
+    background: #fff;
+}
+
+section#contact {
+    background: #f9f9f9;
+}
+
+.fh5co-heading {
+    margin-bottom: 30px;
+}
+
+.fh5co-heading h2 {
+    font-size: 2.5em;
+    margin-bottom: 15px;
+}
+
+.fh5co-heading p {
+    font-size: 1.2em;
+    color: #555;
+}
+
+/* Footer */
+#fh5co-footer {
+    background: #333;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+#fh5co-footer p {
+    margin: 0;
+    font-size: 1em;
+}

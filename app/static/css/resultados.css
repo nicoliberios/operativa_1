@@ -1,0 +1,112 @@
+/* estilos_resultado.css */
+
+/* General */
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Título principal */
+h1 {
+    font-size: 2.5em;
+    color: #3498db;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Títulos secundarios */
+h2 {
+    font-size: 1.8em;
+    color: #333;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 5px;
+}
+
+/* Párrafos */
+p {
+    font-size: 1.2em;
+    margin-bottom: 15px;
+}
+
+/* Listas */
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+ul li {
+    font-size: 1.1em;
+    margin-bottom: 10px;
+    background: #ecf0f1;
+    padding: 10px;
+    border-radius: 5px;
+    border-left: 5px solid #3498db;
+}
+
+/* Enlaces */
+a {
+    text-decoration: none;
+    color: #3498db;
+}
+
+a:hover {
+    color: #2980b9;
+}
+
+/* Botón de volver */
+#volver {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#volver a {
+    display: inline-block;
+    background: #3498db;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1.2em;
+}
+
+#volver a:hover {
+    background: #2980b9;
+}
+
+/* Media Queries para adaptabilidad */
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    h2 {
+        font-size: 1.5em;
+    }
+
+    p, ul li {
+        font-size: 1em;
+    }
+
+    #volver a {
+        padding: 8px 16px;
+        font-size: 1em;
+    }
+}

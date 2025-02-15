@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Programación Lineal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/linear.css') }}">
+</head>
+<body>
+    <h1>Formulario de Programación Lineal</h1>
+    <form action="/linear" method="post">
+        <label for="funcion_objetivo">Función Objetivo:</label>
+        <input type="text" id="funcion_objetivo" name="funcion_objetivo" placeholder="e.g., 3*x + 4*y" required><br><br>
+
+        <label for="objetivo">Objetivo:</label>
+        <select id="objetivo" name="objetivo" required>
+            <option value="Maximizar">Maximizar</option>
+            <option value="Minimizar">Minimizar</option>
+        </select><br><br>
+
+        <label for="restricciones">Restricciones:</label><br>
+        <textarea id="restricciones" name="restriccion" rows="5" cols="50" placeholder="Ingrese una restricción por línea, e.g., 2*x + y <= 5" required></textarea><br><br>
+
+        <input type="submit" value="Resolver">
+    </form>
+
+</body>
+</html>

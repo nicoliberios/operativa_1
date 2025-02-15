@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Transporte</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+    <style>
+        .container {
+            margin-top: 50px;
+        }
+
+        .matrix-input {
+            width: 70px;
+            height: 35px;
+            text-align: center;
+        }
+
+        .result-table {
+            margin-top: 20px;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="text-center">Calculadora de Transporte</h1>
+        <form id="transportation-form">
+            <div class="form-group">
+                <label for="numSources">Número de fuentes:</label>
+                <input type="number" class="form-control" id="numSources" name="numSources" required>
+            </div>
+            <div class="form-group">
+                <label for="numDestinations">Número de destinos:</label>
+                <input type="number" class="form-control" id="numDestinations" name="numDestinations" required>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="generateMatrix()">Generar Matriz</button>
+            <div id="matrix-container" style="margin-top: 20px;"></div>
+            <button type="submit" class="btn btn-success" style="margin-top: 20px;">Calcular</button>
+        </form>
+        <div id="results" style="margin-top: 20px;"></div>
+    </div>
+
+    <script>
+        function generateMatrix() {
+            const numSources = document.getElementById('numSources').value;
+            const numDestinations = document.getElementById('numDestinations').value;
+            const container = document.getElementById('matrix-container');
+            let html = '<h3>Suministros</h3>';
+            for (let i = 0; i < numSources; i++) {
+                html += `<div class="form-group"><label for="supply${i}">Suministro para la fuente ${i + 1}:</label><input type="number" class="form-control" id="supply${i}" name="supply${i}" required></div>`;
+            }
+            html += '<h3>Demandas</h3>';
+            for (let j = 0; j < numDestinations; j++) {
+                html += `<div class="form-group"><label for="demand${j}">Demanda para el destino ${j + 1}:</label><input type="number" class="form-control" id="demand${j}" name="demand${j}" required></div>`;
+            }
+            html += '<h3>Costos de Transporte</h3>';
+            html += '<table class="table table-bordered"><thead><tr><th></th>';
+            for (let j = 0; j < numDestinations; j++) {
+                html += `<th>Destino ${j + 1}</th>`;
+            }
+            html += '</tr></thead><tbody>';
+            for (let i = 0; i < numSources; i++) {
+                html += `<tr><th>Fuente ${i + 1}</th>`;
+                for (let j = 0; j < numDestinations; j++) {
+                    html += `<td><input type="number" class="form-control matrix-input" id="cost${i}${j}" name="cost${i}${j}" required></td>`;
+                }
+                html += '</tr>';
+            }
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+
+        document.getElementById('transportation-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+
+            fetch('/transportation', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.error) {
+                        document.getElementById('results').innerHTML = `<p class="text-danger">Error: ${result.error}</p>`;
+                        return;
+                    }
+
+                    let resultHTML = `<h3>Resultados</h3>`;
+                    resultHTML += `<h4>Matriz Inicial</h4>`;
+                    resultHTML += `<table class="table table-bordered result-table"><tbody>`;
+                    result.initial_matrix.forEach(row => {
+                        resultHTML += `<tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>`;
+                    });
+                    resultHTML += `</tbody></table>`;
+
+                    resultHTML += `<h4>Método de Vogel</h4>`;
+                    resultHTML += `<table class="table table-bordered result-table"><tbody>`;
+                    result.vogel.allocation.forEach(row => {
+                        resultHTML += `<tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>`;
+                    });
+                    resultHTML += `</tbody></table>`;
+                    resultHTML += `<p>Costo total: ${result.vogel.cost}</p>`;
+
+                    resultHTML += `<h4>Método Simplex</h4>`;
+                    resultHTML += `<table class="table table-bordered result-table"><tbody>`;
+                    result.simplex.allocation.forEach(row => {
+                        resultHTML += `<tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>`;
+                    });
+                    resultHTML += `</tbody></table>`;
+                    resultHTML += `<p>Costo total: ${result.simplex.cost}</p>`;
+
+                    document.getElementById('results').innerHTML = resultHTML;
+                })
+                .catch(error => {
+                    document.getElementById('results').innerHTML = `<p class="text-danger">Error: ${error.message}</p>`;
+                });
+        });
+    </script>
+</body>
+
+</html>

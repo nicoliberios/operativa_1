@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados de Programación Lineal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/resultados.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Resultados del Problema de Programación Lineal</h1>
+        <div class="resultado">
+            <h2>Función Objetivo</h2>
+            <p>{{ resultado['Función'] }}</p>
+
+            <h2>Tipo de Objetivo</h2>
+            <p>{{ resultado['Objetivo'] }}</p>
+
+            <h2>Valor de la Función Objetivo</h2>
+            <p>{{ resultado['Valor_Objetivo'] }}</p>
+
+            <h2>Variables y Valores</h2>
+            <ul>
+                {% for var, val in resultado['Variables'].items() %}
+                <li>{{ var }} = {{ val }}</li>
+                {% endfor %}
+            </ul>
+
+            <h2>Restricciones</h2>
+            <ul>
+                {% for restriccion in resultado['Restricciones'] %}
+                <li>{{ restriccion }}</li>
+                {% endfor %}
+            </ul>
+
+            {% if resultado['Holguras'] %}
+            <h2>Holguras</h2>
+            <ul>
+                {% for holgura, val in resultado['Holguras'].items() %}
+                <li>{{ holgura }} = {{ val }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+
+            {% if resultado['Artificios'] %}
+            <h2>Variables de Artificio</h2>
+            <ul>
+                {% for artificio, val in resultado['Artificios'].items() %}
+                <li>{{ artificio }} = {{ val }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+
+            {% if resultado['Costo_Reducido'] %}
+            <h2>Costo Reducido</h2>
+            <ul>
+                {% for var, val in resultado['Costo_Reducido'].items() %}
+                <li>{{ var }} = {{ val }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+
+            {% if resultado['Precios_Duales'] %}
+            <h2>Precios Dual</h2>
+            <ul>
+                {% for restriccion, val in resultado['Precios_Duales'].items() %}
+                <li>{{ restriccion }} = {{ val }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+
+        <div class="analisis">
+            <h2>Análisis de Sensibilidad</h2>
+            <p>{{ analisi }}</p>
+        </div>
+
+        <div id="volver">
+            <a href="/">Volver al inicio</a>
+        </div>
+    </div>
+</body>
+</html>
