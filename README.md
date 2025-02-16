@@ -21,7 +21,7 @@ Antes de comenzar, asegúrate de tener instalado lo siguiente:
 2. **Crea un ambiente**
    En la misma terminal ejecuta:
    ```bash
-   python -M venv envO
+   python -m venv envO
    ```
 3. **Activa el ambiente**
    En la misma terminal, para windows ejecuta:
