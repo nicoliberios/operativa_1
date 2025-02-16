@@ -35,10 +35,10 @@ def linear():
 
         # Resolver el problema
         resultado = LinearProgrammingSolver.resolver_problema(funcion_objetivo, objetivo, restricciones)
-        #analisi=GptAnaliser.interpretar_sensibilidad(resultado)
+        analisi=GptAnaliser.interpretar_sensibilidad(resultado)
         print(resultado)
         if resultado:
-            return render_template('resultado.html',resultado=resultado)
+            return render_template('resultado.html',resultado=resultado, analisi=analisi)
 
     # Renderizar la plantilla con resultados
     return render_template('linear-programming.html')
