@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Redes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <section class="py-5">
+        <div class="container text-center">
+            <h2 class="section-title">Calculadora de Redes</h2>
+            <p class="objective-text">
+                Ingresa los nodos y conexiones de tu red para calcular el flujo máximo.
+            </p>
+            <form action="/redesb" method="POST">
+                <label for="nodes">Nodos (separados por coma):</label>
+                <input type="text" id="nodes" name="nodes" required placeholder="Ej: A,B,C,D,E">
+
+                <label for="edges">Conexiones (Formato: Nodo1,Nodo2,Capacidad separados por ';'):</label>
+                <textarea id="edges" name="edges" required placeholder="Ej: A,B,10; A,C,15; B,D,10"></textarea>
+
+                <label for="source">Nodo de Origen:</label>
+                <input type="text" id="source" name="source" required placeholder="Ej: A">
+
+                <label for="sink">Nodo de Destino:</label>
+                <input type="text" id="sink" name="sink" required placeholder="Ej: E">
+
+                <button type="submit" class="btn btn-secondary-custom">Calcular Flujo Máximo</button>
+            </form>
+        </div>
+    </section>
+</body>
+</html>
