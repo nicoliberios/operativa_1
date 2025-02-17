@@ -32,6 +32,8 @@ Antes de comenzar, asegúrate de tener instalado lo siguiente:
    En la misma terminal ejecuta:
    ```bash
    pip install -r requirements.txt
+   pip install importlib-metadata==8.2.0
+   pip install openai==0.27.0
    ```
 5. **Ejecuta la aplicacion**  
    En la misma terminal ejecuta como modulo dependiente:
