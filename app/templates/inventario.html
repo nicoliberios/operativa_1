@@ -5,29 +5,132 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Inventario</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script>
+        function actualizarFormulario() {
+            var operacion = document.getElementById("operacion").value;
+            document.querySelectorAll(".campo").forEach(campo => campo.style.display = "none");
+
+            if (operacion === "eoq") {
+                document.getElementById("eoq_campos").style.display = "block";
+            } else if (operacion === "rop") {
+                document.getElementById("rop_campos").style.display = "block";
+            } else if (operacion === "stock_seguridad") {
+                document.getElementById("stock_seguridad_campos").style.display = "block";
+            } else if (operacion === "costo_total") {
+                document.getElementById("costo_total_campos").style.display = "block";
+            } else if (operacion === "poq") {
+                document.getElementById("poq_campos").style.display = "block";
+            }
+        }
+    </script>
 </head>
 <body>
     <div class="container text-center mt-5">
         <h2>Calculadora de Inventario</h2>
-        <p>Ingresa los datos para calcular la cantidad óptima de pedido (EOQ).</p>
+        <p>Selecciona el cálculo que deseas realizar.</p>
 
         <form action="/inventario" method="POST">
+            <!-- Selección de operación -->
             <div class="form-group">
-                <label for="demanda_anual"><b>Demanda Anual:</b></label>
-                <input type="number" id="demanda_anual" name="demanda_anual" class="form-control" required>
+                <label for="operacion"><b>Selecciona una operación:</b></label>
+                <select id="operacion" name="operacion" class="form-control" onchange="actualizarFormulario()" required>
+                    <option value="eoq">Cantidad Económica de Pedido (EOQ)</option>
+                    <option value="rop">Punto de Reorden (ROP)</option>
+                    <option value="stock_seguridad">Stock de Seguridad</option>
+                    <option value="costo_total">Costo Total de Inventario</option>
+                    <option value="poq">Cantidad Óptima de Producción (POQ)</option>
+                </select>
             </div>
 
-            <div class="form-group">
-                <label for="costo_pedido"><b>Costo por Pedido:</b></label>
-                <input type="number" id="costo_pedido" name="costo_pedido" class="form-control" required>
+            <!-- EOQ -->
+            <div id="eoq_campos" class="campo">
+                <div class="form-group">
+                    <label for="demanda_anual"><b>Demanda Anual:</b></label>
+                    <input type="number" id="demanda_anual" name="demanda_anual" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="costo_pedido"><b>Costo por Pedido:</b></label>
+                    <input type="number" id="costo_pedido" name="costo_pedido" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="costo_mantenimiento"><b>Costo de Mantenimiento por Unidad:</b></label>
+                    <input type="number" id="costo_mantenimiento" name="costo_mantenimiento" class="form-control">
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="costo_mantenimiento"><b>Costo de Mantenimiento por Unidad:</b></label>
-                <input type="number" id="costo_mantenimiento" name="costo_mantenimiento" class="form-control" required>
+            <!-- ROP -->
+            <div id="rop_campos" class="campo" style="display:none;">
+                <div class="form-group">
+                    <label for="demanda_diaria"><b>Demanda Diaria:</b></label>
+                    <input type="number" id="demanda_diaria" name="demanda_diaria" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="tiempo_entrega"><b>Tiempo de Entrega (días):</b></label>
+                    <input type="number" id="tiempo_entrega" name="tiempo_entrega" class="form-control">
+                </div>
             </div>
 
-            <button type="submit" class="btn btn-primary">Calcular EOQ</button>
+            <!-- Stock de Seguridad -->
+            <div id="stock_seguridad_campos" class="campo" style="display:none;">
+                <div class="form-group">
+                    <label for="nivel_servicio"><b>Nivel de Servicio (%):</b></label>
+                    <input type="number" id="nivel_servicio" name="nivel_servicio" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="desviacion_demanda"><b>Desviación Estándar de la Demanda:</b></label>
+                    <input type="number" id="desviacion_demanda" name="desviacion_demanda" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="tiempo_entrega"><b>Tiempo de Entrega (días):</b></label>
+                    <input type="number" id="tiempo_entrega" name="tiempo_entrega" class="form-control">
+                </div>
+            </div>
+
+            <!-- Costo Total -->
+            <div id="costo_total_campos" class="campo" style="display:none;">
+                <div class="form-group">
+                    <label for="demanda_anual"><b>Demanda Anual:</b></label>
+                    <input type="number" id="demanda_anual" name="demanda_anual" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="costo_pedido"><b>Costo por Pedido:</b></label>
+                    <input type="number" id="costo_pedido" name="costo_pedido" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="costo_mantenimiento"><b>Costo de Mantenimiento:</b></label>
+                    <input type="number" id="costo_mantenimiento" name="costo_mantenimiento" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="eoq"><b>EOQ Calculado:</b></label>
+                    <input type="number" id="eoq" name="eoq" class="form-control">
+                </div>
+            </div>
+
+            <!-- POQ -->
+            <div id="poq_campos" class="campo" style="display:none;">
+                <div class="form-group">
+                    <label for="demanda_anual"><b>Demanda Anual:</b></label>
+                    <input type="number" id="demanda_anual" name="demanda_anual" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="costo_pedido"><b>Costo por Pedido:</b></label>
+                    <input type="number" id="costo_pedido" name="costo_pedido" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="costo_mantenimiento"><b>Costo de Mantenimiento:</b></label>
+                    <input type="number" id="costo_mantenimiento" name="costo_mantenimiento" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="tasa_produccion"><b>Tasa de Producción:</b></label>
+                    <input type="number" id="tasa_produccion" name="tasa_produccion" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="tasa_demanda"><b>Tasa de Demanda:</b></label>
+                    <input type="number" id="tasa_demanda" name="tasa_demanda" class="form-control">
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-3">Calcular</button>
         </form>
     </div>
 </body>

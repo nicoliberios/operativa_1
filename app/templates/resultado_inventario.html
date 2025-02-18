@@ -12,8 +12,22 @@
         
         {% if 'eoq' in resultado %}
             <p><b>Cantidad Óptima de Pedido (EOQ):</b> {{ resultado['eoq'] }}</p>
+        
+        {% elif 'rop' in resultado %}
+            <p><b>Punto de Reorden (ROP):</b> {{ resultado['rop'] }}</p>
+        
+        {% elif 'stock_seguridad' in resultado %}
+            <p><b>Stock de Seguridad:</b> {{ resultado['stock_seguridad'] }}</p>
+        
+        {% elif 'costo_total' in resultado %}
+            <p><b>Costo Total de Inventario:</b> {{ resultado['costo_total'] }}</p>
+        
+        {% elif 'poq' in resultado %}
+            <p><b>Cantidad Óptima de Producción (POQ):</b> {{ resultado['poq'] }}</p>
+        
         {% elif 'error' in resultado %}
             <p class="text-danger"><b>Error:</b> {{ resultado['error'] }}</p>
+        
         {% endif %}
         
         <h3 class="mt-4">Visualización del Inventario</h3>
