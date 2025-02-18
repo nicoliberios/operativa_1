@@ -4,11 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resultado - Redes</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
-<body>
-    <h2>Resultado del Cálculo</h2>
-    <p>Flujo Máximo: {{ resultado['flow_value'] }}</p>
-    <pre>{{ resultado['flow_dict'] }}</pre>
-    <a href="/redesb">Volver</a>
+<body class="bg-light">
+    <div class="container mt-5">
+        <div class="card shadow p-4">
+            <h2 class="text-center text-primary">Resultado del Cálculo</h2>
+
+            <div class="alert alert-success text-center">
+                <h4>Flujo Máximo: <strong>{{ resultado['flow_value'] }}</strong></h4>
+            </div>
+
+            <h5>Detalle del Flujo en las Aristas:</h5>
+            <pre class="p-3 bg-dark text-white rounded">{{ resultado['flow_dict'] }}</pre>
+
+            <div class="text-center mt-4">
+                <a href="/redesb" class="btn btn-secondary">Volver a la Calculadora</a>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

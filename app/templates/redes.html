@@ -4,31 +4,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Redes</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
+    <header class="hero-section text-center">
+        <div class="container">
+            <h1 class="display-4">Calculadora de Redes</h1>
+            <p class="lead">Ingresa los datos de la red para calcular el flujo máximo.</p>
+        </div>
+    </header>
+
     <section class="py-5">
-        <div class="container text-center">
-            <h2 class="section-title">Calculadora de Redes</h2>
-            <p class="objective-text">
-                Ingresa los nodos y conexiones de tu red para calcular el flujo máximo.
-            </p>
-            <form action="/redesb" method="POST">
-                <label for="nodes">Nodos (separados por coma):</label>
-                <input type="text" id="nodes" name="nodes" required placeholder="Ej: A,B,C,D,E">
+        <div class="container">
+            <div class="card shadow p-4">
+                <h2 class="text-center">Ingrese los datos de la red</h2>
+                <p class="text-center text-muted">Siga el formato indicado para cada campo.</p>
 
-                <label for="edges">Conexiones (Formato: Nodo1,Nodo2,Capacidad separados por ';'):</label>
-                <textarea id="edges" name="edges" required placeholder="Ej: A,B,10; A,C,15; B,D,10"></textarea>
+                <form action="/redesb" method="POST">
+                    <div class="form-group">
+                        <label for="nodes"><b>Nodos (separados por coma):</b></label>
+                        <input type="text" id="nodes" name="nodes" class="form-control" required placeholder="Ej: A,B,C,D,E">
+                    </div>
 
-                <label for="source">Nodo de Origen:</label>
-                <input type="text" id="source" name="source" required placeholder="Ej: A">
+                    <div class="form-group">
+                        <label for="edges"><b>Conexiones (Nodo1,Nodo2,Capacidad separados por ';'):</b></label>
+                        <textarea id="edges" name="edges" class="form-control" required rows="3" placeholder="Ej: A,B,10; A,C,15; B,D,10"></textarea>
+                    </div>
 
-                <label for="sink">Nodo de Destino:</label>
-                <input type="text" id="sink" name="sink" required placeholder="Ej: E">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <label for="source"><b>Nodo de Origen:</b></label>
+                            <input type="text" id="source" name="source" class="form-control" required placeholder="Ej: A">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="sink"><b>Nodo de Destino:</b></label>
+                            <input type="text" id="sink" name="sink" class="form-control" required placeholder="Ej: E">
+                        </div>
+                    </div>
 
-                <button type="submit" class="btn btn-secondary-custom">Calcular Flujo Máximo</button>
-            </form>
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg">Calcular Flujo Máximo</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </section>
+
+    <footer class="text-center py-3 bg-dark text-white">
+        <p>&copy; 2025 Calculadora de Redes. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
