@@ -1,23 +1,15 @@
 from flask import Flask, jsonify, render_template, request, send_from_directory
 import numpy as np
-from gpt.GptAnaliser import GptAnaliser
-from transporte.TransporteSolver import solve_transportation_problem, vogel_approximation_method
-from lineal import LinearProgrammingSolver
-from redes.redes_api import redes_bp  # ✅ Importar API de redes
+from gpt.modulo_ia import AnalisisIA
+from transporte.modulo_transporte import m_resuelve_problema_transporte, m_aproximacion_vogel
+from lineal.modulo_plineal import PrograLineal
+from redes.redes_api import redes_bp
 import os
 
 app = Flask(__name__)
 
 # ✅ Registrar el Blueprint de redes en la aplicación principal
-app.register_blueprint(redes_bp)  # ✅ Registra el Blueprint de redes
-
-# Servir imágenes en static/graphs/
-@app.route('/static/graphs/<path:filename>')
-def serve_graphs(filename):
-    ruta_completa = os.path.join(app.static_folder, 'graphs', filename)
-    print(f"🔍 Buscando imagen en: {ruta_completa}")  # ✅ Verifica la ruta en la consola
-    return send_from_directory(os.path.join(app.static_folder, 'graphs'), filename)
-
+app.register_blueprint(redes_bp)
 
 @app.route('/redesb')
 def redes():
@@ -31,7 +23,7 @@ def index():
 def objetivo():
     return render_template('objetivo.html')
 
-@app.route('/linear', methods=['GET', 'POST'])
+@app.route('/lineal', methods=['GET', 'POST'])
 def linear():
     resultado = None
     if request.method == 'POST':
@@ -52,18 +44,16 @@ def linear():
             return "Faltan datos en el formulario.", 400
 
    
-        resultado = LinearProgrammingSolver.resolver_problema(funcion_objetivo, objetivo, restricciones)
-        analisi = GptAnaliser.interpretar_sensibilidad(resultado)
+        resultado = PrograLineal.resolver_problema(funcion_objetivo, objetivo, restricciones)
+        analisi = AnalisisIA.interpretar_sensibilidad(resultado)
 
         if resultado:
             return render_template('resultado.html', resultado=resultado, analisi=analisi)
 
-
-  
-    return render_template('linear-programming.html')
+    return render_template('progra-lineal.html')
 
 
-@app.route('/transportation', methods=['GET', 'POST'])
+@app.route('/ptransporte', methods=['GET', 'POST'])
 def transportation():
     if request.method == 'POST':
         try:
@@ -84,9 +74,9 @@ def transportation():
                     supply.append(sum(demand) - sum(supply))
                     cost_matrix = np.vstack((cost_matrix, np.zeros((1, cost_matrix.shape[1]))))
 
-            vogel_allocation = vogel_approximation_method(supply, demand, cost_matrix.tolist())
+            vogel_allocation = m_aproximacion_vogel(supply, demand, cost_matrix.tolist())
             vogel_cost = np.sum(vogel_allocation * cost_matrix)
-            simplex_allocation, simplex_cost = solve_transportation_problem(supply, demand, cost_matrix.tolist())
+            simplex_allocation, simplex_cost = m_resuelve_problema_transporte(supply, demand, cost_matrix.tolist())
 
             return jsonify({
                 'initial_matrix': cost_matrix.tolist(),
@@ -95,7 +85,7 @@ def transportation():
             })
         except Exception as e:
             return jsonify({'error': str(e)})
-    return render_template('transportation.html')
+    return render_template('transporte.html')
 
 
 if __name__ == '__main__':
