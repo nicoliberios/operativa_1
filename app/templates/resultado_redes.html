@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultado - Redes</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container text-center mt-5">
+        <h2>Resultado del Cálculo</h2>
+        
+        {% if 'flow_value' in resultado %}
+            <p><b>Flujo Máximo:</b> {{ resultado['flow_value'] }}</p>
+            <pre>{{ resultado['flow_dict'] }}</pre>
+        
+        {% elif 'path' in resultado %}
+            <p><b>Ruta Mínima:</b> {{ resultado['path'] }}</p>
+            <p><b>Longitud Total:</b> {{ resultado['length'] }}</p>
+        
+        {% elif 'mst_edges' in resultado %}
+            <p><b>Árbol de Expansión Mínima (MST):</b></p>
+            <pre>{{ resultado['mst_edges'] }}</pre>
+        
+        {% elif 'error' in resultado %}
+            <p class="text-danger"><b>Error:</b> {{ resultado['error'] }}</p>
+        
+        {% endif %}
+        
+        <h3 class="mt-4">Visualización del Grafo</h3>
+        <img src="{{ url_for('static', filename='graphs/network.png') }}?t={{ now }}" alt="Grafo de la Red">
+
+        <div class="mt-4">
+            <a href="/redesb" class="btn btn-primary">Volver</a>
+        </div>
+    </div>
+</body>
+</html>
