@@ -6,21 +6,32 @@
     <title>Resultado - Redes</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
-<body class="bg-light">
-    <div class="container mt-5">
-        <div class="card shadow p-4">
-            <h2 class="text-center text-primary">Resultado del Cálculo</h2>
+<body>
+    <div class="container text-center mt-5">
+        <h2>Resultado del Cálculo</h2>
+        
+        {% if 'flow_value' in resultado %}
+            <p><b>Flujo Máximo:</b> {{ resultado['flow_value'] }}</p>
+            <pre>{{ resultado['flow_dict'] }}</pre>
+        
+        {% elif 'path' in resultado %}
+            <p><b>Ruta Mínima:</b> {{ resultado['path'] }}</p>
+            <p><b>Longitud Total:</b> {{ resultado['length'] }}</p>
+        
+        {% elif 'mst_edges' in resultado %}
+            <p><b>Árbol de Expansión Mínima (MST):</b></p>
+            <pre>{{ resultado['mst_edges'] }}</pre>
+        
+        {% elif 'error' in resultado %}
+            <p class="text-danger"><b>Error:</b> {{ resultado['error'] }}</p>
+        
+        {% endif %}
+        
+        <h3 class="mt-4">Visualización del Grafo</h3>
+        <img src="{{ url_for('static', filename='graphs/network.png') }}?t={{ now }}" alt="Grafo de la Red">
 
-            <div class="alert alert-success text-center">
-                <h4>Flujo Máximo: <strong>{{ resultado['flow_value'] }}</strong></h4>
-            </div>
-
-            <h5>Detalle del Flujo en las Aristas:</h5>
-            <pre class="p-3 bg-dark text-white rounded">{{ resultado['flow_dict'] }}</pre>
-
-            <div class="text-center mt-4">
-                <a href="/redesb" class="btn btn-secondary">Volver a la Calculadora</a>
-            </div>
+        <div class="mt-4">
+            <a href="/redesb" class="btn btn-primary">Volver</a>
         </div>
     </div>
 </body>

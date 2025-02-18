@@ -1,14 +1,23 @@
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, jsonify, render_template, request, send_from_directory
 import numpy as np
 from gpt.GptAnaliser import GptAnaliser
 from transporte.TransporteSolver import solve_transportation_problem, vogel_approximation_method
 from lineal import LinearProgrammingSolver
 from redes.redes_api import redes_bp  # ✅ Importar API de redes
+import os
 
 app = Flask(__name__)
 
 # ✅ Registrar el Blueprint de redes en la aplicación principal
 app.register_blueprint(redes_bp)  # ✅ Registra el Blueprint de redes
+
+# Servir imágenes en static/graphs/
+@app.route('/static/graphs/<path:filename>')
+def serve_graphs(filename):
+    ruta_completa = os.path.join(app.static_folder, 'graphs', filename)
+    print(f"🔍 Buscando imagen en: {ruta_completa}")  # ✅ Verifica la ruta en la consola
+    return send_from_directory(os.path.join(app.static_folder, 'graphs'), filename)
+
 
 @app.route('/redesb')
 def redes():

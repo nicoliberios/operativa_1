@@ -11,7 +11,7 @@
     <header class="hero-section text-center">
         <div class="container">
             <h1 class="display-4">Calculadora de Redes</h1>
-            <p class="lead">Ingresa los datos de la red para calcular el flujo máximo.</p>
+            <p class="lead">Ingresa los datos de la red para calcular la solución deseada.</p>
         </div>
     </header>
 
@@ -21,30 +21,43 @@
                 <h2 class="text-center">Ingrese los datos de la red</h2>
                 <p class="text-center text-muted">Siga el formato indicado para cada campo.</p>
 
-                <form action="/redesb" method="POST">
+                <form id="networkForm" action="/redesb" method="POST">
+                    <!-- Selector de tipo de cálculo -->
+                    <div class="form-group">
+                        <label for="operation"><b>Seleccione el tipo de cálculo:</b></label>
+                        <select id="operation" name="operation" class="form-control">
+                            <option value="max_flow">Flujo Máximo</option>
+                            <option value="shortest_path">Ruta Mínima</option>
+                            <option value="mst">Árbol de Expansión Mínima (MST)</option>
+                        </select>
+                    </div>
+
+                    <!-- Campo de nodos -->
                     <div class="form-group">
                         <label for="nodes"><b>Nodos (separados por coma):</b></label>
                         <input type="text" id="nodes" name="nodes" class="form-control" required placeholder="Ej: A,B,C,D,E">
                     </div>
 
+                    <!-- Campo de conexiones -->
                     <div class="form-group">
-                        <label for="edges"><b>Conexiones (Nodo1,Nodo2,Capacidad separados por ';'):</b></label>
+                        <label for="edges"><b>Conexiones (Nodo1,Nodo2,Valor separados por ';'):</b></label>
                         <textarea id="edges" name="edges" class="form-control" required rows="3" placeholder="Ej: A,B,10; A,C,15; B,D,10"></textarea>
                     </div>
 
-                    <div class="form-row">
+                    <!-- Campos para Flujo Máximo y Ruta Mínima -->
+                    <div class="form-row" id="sourceSinkFields">
                         <div class="col-md-6">
                             <label for="source"><b>Nodo de Origen:</b></label>
-                            <input type="text" id="source" name="source" class="form-control" required placeholder="Ej: A">
+                            <input type="text" id="source" name="source" class="form-control" placeholder="Ej: A">
                         </div>
                         <div class="col-md-6">
                             <label for="sink"><b>Nodo de Destino:</b></label>
-                            <input type="text" id="sink" name="sink" class="form-control" required placeholder="Ej: E">
+                            <input type="text" id="sink" name="sink" class="form-control" placeholder="Ej: E">
                         </div>
                     </div>
 
                     <div class="text-center mt-4">
-                        <button type="submit" class="btn btn-primary btn-lg">Calcular Flujo Máximo</button>
+                        <button type="submit" class="btn btn-primary btn-lg">Calcular</button>
                     </div>
                 </form>
             </div>
@@ -57,5 +70,21 @@
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <script>
+        document.getElementById("operation").addEventListener("change", function() {
+            let operation = this.value;
+            let sourceSinkFields = document.getElementById("sourceSinkFields");
+
+            if (operation === "mst") {
+                sourceSinkFields.style.display = "none";  // Ocultar para MST
+            } else {
+                sourceSinkFields.style.display = "flex";  // Mostrar para Flujo Máximo y Ruta Mínima
+            }
+        });
+
+        // Ejecutar al cargar para ocultar si es necesario
+        document.getElementById("operation").dispatchEvent(new Event("change"));
+    </script>
 </body>
 </html>
