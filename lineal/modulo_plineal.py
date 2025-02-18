@@ -1,7 +1,7 @@
 import pulp
 import re
 
-class LinearProgrammingSolver:
+class PrograLineal:
     @staticmethod
     def resolver_problema(funcion_objetivo, objetivo, restricciones):
         variables = list(set(re.findall(r'[a-zA-Z]+', funcion_objetivo)))
@@ -71,7 +71,7 @@ if __name__ == "__main__":
         "x + y = 3"
     ]
 
-    resultado = LinearProgrammingSolver.resolver_problema(funcion_objetivo, objetivo, restricciones)
+    resultado = PrograLineal.resolver_problema(funcion_objetivo, objetivo, restricciones)
 
     print("Resultados del Problema de Programación Lineal:")
     print(f"Función Objetivo: {resultado['Función']}")

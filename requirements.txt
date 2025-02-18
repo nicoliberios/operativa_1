@@ -17,3 +17,4 @@ python-dotenv==1.0.1
 networkx==3.2.1
 setuptools==68.2.2
 networkx==3.4.2
+matplotlib==3.10.0

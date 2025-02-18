@@ -1,13 +1,12 @@
 # Ciclo de optimización de operaciones
 
-Este proyecto está diseñado para implementar modelos de programación lineal, transporte y redes, utilizando varias bibliotecas de ciencia de datos y optimización. Se detallan a continuacion como configuar y ejecutar este proyecto.
+Este proyecto está diseñado para implementar modelos de programación lineal, transporte, redes y aplicando Inteligencia artificial para el analisis. Se detallan a continuacion como configuar y ejecutar este proyecto.
 
 ## Requisitos Previos
 
 Antes de comenzar, asegúrate de tener instalado lo siguiente:
 
 - **Python 3.7 o superior**
-- **Pip** (administrador de paquetes de Python)
 - **Un IDE como VSCode o PyCharm** (opcional)
 
 ## Instrucciones de Instalación
