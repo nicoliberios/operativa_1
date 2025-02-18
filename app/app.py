@@ -4,14 +4,16 @@ from gpt.GptAnaliser import GptAnaliser
 from transporte.TransporteSolver import solve_transportation_problem, vogel_approximation_method
 from lineal import LinearProgrammingSolver
 from redes.redes_api import redes_bp  # ✅ Importar API de redes
+from inventario.inventario_api import inventario_bp  # ✅ Importar API de Inventario
 import os
 
 app = Flask(__name__)
 
-# ✅ Registrar el Blueprint de redes en la aplicación principal
+# ✅ Registrar Blueprints
 app.register_blueprint(redes_bp)  # ✅ Registra el Blueprint de redes
+app.register_blueprint(inventario_bp)  # ✅ Registra el Blueprint de Inventario
 
-# Servir imágenes en static/graphs/
+# ✅ Servir imágenes en static/graphs/
 @app.route('/static/graphs/<path:filename>')
 def serve_graphs(filename):
     ruta_completa = os.path.join(app.static_folder, 'graphs', filename)
@@ -22,6 +24,10 @@ def serve_graphs(filename):
 @app.route('/redesb')
 def redes():
     return render_template('redes.html')
+
+@app.route('/inventario')  # ✅ Agregar ruta para Inventario
+def inventario():
+    return render_template('inventario.html')
 
 @app.route('/')
 def index():
@@ -35,15 +41,15 @@ def objetivo():
 def linear():
     resultado = None
     if request.method == 'POST':
-   
+     
         funcion_objetivo = request.form.get('funcion_objetivo')
         objetivo = request.form.get('objetivo')
         restricciones_raw = request.form.get('restriccion')
 
-    
+
         restricciones = [r.strip() for r in restricciones_raw.split('\n') if r.strip()]
 
-    
+
         print(f"Función Objetivo: {funcion_objetivo}")
         print(f"Objetivo: {objetivo}")
         print(f"Restricciones: {restricciones}")
@@ -51,7 +57,7 @@ def linear():
         if not funcion_objetivo or not objetivo or not restricciones:
             return "Faltan datos en el formulario.", 400
 
-   
+
         resultado = LinearProgrammingSolver.resolver_problema(funcion_objetivo, objetivo, restricciones)
         analisi = GptAnaliser.interpretar_sensibilidad(resultado)
 
@@ -59,7 +65,7 @@ def linear():
             return render_template('resultado.html', resultado=resultado, analisi=analisi)
 
 
-  
+
     return render_template('linear-programming.html')
 
 
@@ -95,6 +101,7 @@ def transportation():
             })
         except Exception as e:
             return jsonify({'error': str(e)})
+
     return render_template('transportation.html')
 
 

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Inventario</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container text-center mt-5">
+        <h2>Calculadora de Inventario</h2>
+        <p>Ingresa los datos para calcular la cantidad óptima de pedido (EOQ).</p>
+
+        <form action="/inventario" method="POST">
+            <div class="form-group">
+                <label for="demanda_anual"><b>Demanda Anual:</b></label>
+                <input type="number" id="demanda_anual" name="demanda_anual" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="costo_pedido"><b>Costo por Pedido:</b></label>
+                <input type="number" id="costo_pedido" name="costo_pedido" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="costo_mantenimiento"><b>Costo de Mantenimiento por Unidad:</b></label>
+                <input type="number" id="costo_mantenimiento" name="costo_mantenimiento" class="form-control" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Calcular EOQ</button>
+        </form>
+    </div>
+</body>
+</html>
